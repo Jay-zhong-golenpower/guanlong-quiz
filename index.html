@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>冠隆电力 · 知识技能刷题</title>
+<style>
+:root{
+  --p:#1a3c5a;--pl:#2980b9;--s:#27ae60;--d:#e74c3c;--w:#f39c12;
+  --bg:#f0f4f8;--card:#fff;--t:#2c3e50;--tl:#7f8c8d;--bd:#dce4ec;
+  --shadow:0 2px 16px rgba(0,0,0,.08);--radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif;
+  background:linear-gradient(180deg,#e8f0f8 0%,#f0f4f8 100%);color:var(--t);
+  min-height:100dvh;line-height:1.6;-webkit-tap-highlight-color:transparent;
+}
+
+/* ---- HEADER ---- */
+.app-header{
+  background:linear-gradient(135deg,#0f2840,#1a3c5a,#1e4d7b);
+  color:#fff;padding:20px 16px 16px;text-align:center;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15);
+}
+.app-header .logo-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px}
+.app-header .logo{width:40px;height:40px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.app-header .logo img{width:100%;height:100%;object-fit:contain;padding:2px}
+.app-header h1{font-size:18px;font-weight:700;letter-spacing:.5px}
+.app-header .sub{font-size:11px;opacity:.75;margin-top:2px}
+
+.page{max-width:500px;margin:0 auto;padding:14px 14px 30px;min-height:calc(100dvh - 100px)}
+
+/* ---- HOME PAGE ---- */
+.hero-card{
+  background:linear-gradient(135deg,#1a3c5a,#1e5a8a);color:#fff;
+  border-radius:var(--radius);padding:24px 20px;margin-bottom:14px;
+  box-shadow:0 4px 20px rgba(26,60,90,.25);
+}
+.hero-card .hero-title{font-size:22px;font-weight:800;margin-bottom:6px}
+.hero-card .hero-desc{font-size:13px;opacity:.85;line-height:1.6}
+.hero-stats{display:flex;gap:10px;margin-top:14px}
+.hero-stat{
+  flex:1;background:rgba(255,255,255,.1);border-radius:10px;
+  padding:10px;text-align:center;
+}
+.hero-stat .hs-num{font-size:22px;font-weight:800}
+.hero-stat .hs-label{font-size:10px;opacity:.7;margin-top:1px}
+
+/* ---- COMPETITION BANNER ---- */
+.comp-banner{
+  background:linear-gradient(135deg,#7f1d1d,#c0392b);
+  color:#fff;border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;
+  box-shadow:0 4px 16px rgba(192,57,43,.28);
+  position:relative;overflow:hidden;
+}
+.comp-banner .cb-tag{
+  display:inline-block;background:rgba(255,255,255,.22);border-radius:6px;
+  padding:2px 9px;font-size:10px;letter-spacing:1.5px;margin-bottom:8px;font-weight:600;
+}
+.comp-banner .cb-title{font-size:20px;font-weight:800;margin-bottom:4px}
+.comp-banner .cb-desc{font-size:12px;opacity:.92;line-height:1.55}
+.comp-banner .cb-countdown{
+  margin-top:10px;background:rgba(0,0,0,.28);border-radius:10px;
+  padding:8px 12px;font-size:13px;text-align:center;font-weight:600;
+}
+.comp-banner .cb-countdown b{color:#ffd76a;font-size:17px}
+
+.form-card{
+  background:var(--card);border-radius:var(--radius);padding:20px;
+  box-shadow:var(--shadow);margin-bottom:14px;
+}
+.form-card .fc-title{font-size:15px;font-weight:700;color:var(--p);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.form-group{margin-bottom:14px}
+.form-group:last-child{margin-bottom:0}
+.form-label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--tl)}
+.form-input,.form-select{
+  width:100%;padding:12px 14px;border:2px solid var(--bd);border-radius:10px;
+  font-size:15px;font-family:inherit;color:var(--t);background:#fafbfc;
+  transition:all .2s;-webkit-appearance:none;appearance:none;
+}
+.form-input:focus,.form-select:focus{outline:none;border-color:var(--pl);background:#fff;box-shadow:0 0 0 3px rgba(41,128,185,.1)}
+.form-select{background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M6 8L1 3h10z' fill='%237f8c8d'/></svg>");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.form-hint{font-size:11px;color:#e74c3c;margin-top:4px;display:none}
+.form-input.error{border-color:#e74c3c}
+.form-input.error+.form-hint{display:block}
+
+/* ---- BUTTONS ---- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 24px;border-radius:10px;font-size:15px;font-weight:600;
+  cursor:pointer;border:none;transition:all .2s;gap:8px;
+  font-family:inherit;-webkit-appearance:none;
+}
+.btn-full{width:100%}
+.btn-primary{background:linear-gradient(135deg,#1a3c5a,#2980b9);color:#fff;box-shadow:0 4px 12px rgba(26,60,90,.3)}
+.btn-primary:active{transform:scale(.97);opacity:.9}
+.btn-primary:disabled{opacity:.5;pointer-events:none}
+.btn-success{background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;box-shadow:0 4px 12px rgba(39,174,96,.3)}
+.btn-outline{background:#fff;color:var(--p);border:2px solid var(--p)}
+.btn-outline:active{background:#f0f7ff}
+
+/* ---- PROGRESS BAR ---- */
+.progress-wrap{margin-bottom:12px}
+.progress-info{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px;color:var(--tl)}
+.progress-bar{height:8px;background:var(--bd);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--p),var(--pl));border-radius:4px;transition:width .3s}
+
+/* ---- QUIZ CARD ---- */
+.quiz-card{
+  background:var(--card);border-radius:var(--radius);padding:20px;
+  box-shadow:var(--shadow);margin-bottom:14px;
+}
+.quiz-meta{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.tag{
+  display:inline-flex;align-items:center;padding:3px 10px;border-radius:12px;
+  font-size:11px;font-weight:600;gap:3px;
+}
+.tag-t{background:#dbeafe;color:#1e40af}
+.tag-c{background:#d1fae5;color:#065f46}
+.tag-d1{background:#dcfce7;color:#166534}
+.tag-d2{background:#ffedd5;color:#9a3412}
+.tag-d3{background:#fee2e2;color:#991b1b}
+
+.question-num{font-size:20px;font-weight:800;color:var(--p);margin-bottom:4px}
+.question-text{
+  font-size:16px;line-height:1.8;margin-bottom:20px;white-space:pre-wrap;
+  word-break:break-word;font-weight:500;
+}
+
+.options-list{display:flex;flex-direction:column;gap:10px}
+.opt-item{
+  padding:13px 16px;border:2px solid var(--bd);border-radius:12px;
+  cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:12px;
+  font-size:15px;line-height:1.5;background:#fafbfc;
+}
+.opt-item:active{transform:scale(.98)}
+.opt-item.selected{border-color:var(--pl);background:#eff6ff;box-shadow:0 0 0 1px rgba(41,128,185,.2)}
+.opt-item.correct{border-color:var(--s);background:#ecfdf5}
+.opt-item.wrong{border-color:var(--d);background:#fef2f2}
+
+/* ---- TIMER ---- */
+.timer-wrap{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-bottom:14px;padding:10px 14px;
+  background:var(--bg);border-radius:12px;
+}
+.timer-ring{
+  width:54px;height:54px;position:relative;flex-shrink:0;
+  border-radius:50%;background:conic-gradient(var(--timer-color,#27ae60) var(--timer-pct,100%),#e2e8f0 0);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s;
+}
+.timer-ring::after{
+  content:'';width:42px;height:42px;border-radius:50%;background:var(--card);
+  position:absolute;
+}
+.timer-ring.safe{--timer-color:#27ae60}
+.timer-ring.warn{--timer-color:#f39c12}
+.timer-ring.danger{--timer-color:#e74c3c}
+.timer-num{
+  position:relative;z-index:1;
+  font-size:20px;font-weight:900;text-align:center;line-height:1;
+  transition:color .3s;
+}
+.timer-num.safe{color:#27ae60}
+.timer-num.warn{color:#f39c12}
+.timer-num.danger{color:#e74c3c}
+.timer-num.danger.pulse{animation:pulse .5s ease-in-out infinite}
+.timer-label{
+  font-size:13px;font-weight:600;color:var(--tl);white-space:nowrap;
+}
+.timer-label .timeout-warn{color:#e74c3c;font-weight:700}
+.timer-status{
+  font-size:13px;font-weight:700;text-align:center;
+}
+.timer-status.timeout{color:#e74c3c;animation:pulse .5s}
+.opt-label{
+  width:30px;height:30px;min-width:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:14px;background:var(--bg);color:var(--t);
+  transition:all .15s;
+}
+.opt-item.selected .opt-label{background:var(--pl);color:#fff}
+.opt-item.correct .opt-label{background:var(--s);color:#fff}
+.opt-item.wrong .opt-label{background:var(--d);color:#fff}
+
+.text-input{
+  width:100%;padding:14px;border:2px solid var(--bd);border-radius:12px;
+  font-size:15px;font-family:inherit;resize:vertical;min-height:100px;
+  background:#fafbfc;transition:border .2s;line-height:1.6;
+}
+.text-input:focus{outline:none;border-color:var(--pl);background:#fff}
+
+.answer-box{
+  margin-top:16px;padding:14px;background:#fffbeb;
+  border:1px solid #fcd34d;border-radius:12px;
+}
+.answer-box .ab-label{font-weight:700;color:#92400e;margin-bottom:4px;font-size:13px}
+.answer-box .ab-content{color:#78350f;white-space:pre-wrap;font-size:14px;line-height:1.7}
+
+.feedback-badge{
+  display:inline-flex;align-items:center;gap:4px;padding:6px 14px;
+  border-radius:20px;font-size:13px;font-weight:700;margin-bottom:12px;
+}
+.feedback-badge.correct{background:#dcfce7;color:#166534}
+.feedback-badge.wrong{background:#fee2e2;color:#991b1b}
+
+.nav-row{display:flex;gap:10px;margin-top:16px}
+.nav-row .btn{flex:1}
+
+/* ---- DOT NAVIGATOR ---- */
+.dot-nav{
+  display:flex;flex-wrap:wrap;gap:5px;justify-content:center;
+  margin-top:16px;padding:10px;max-height:120px;overflow-y:auto;
+}
+.dot{
+  width:26px;height:26px;border-radius:50%;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:all .15s;background:#e2e8f0;color:#64748b;
+}
+.dot.current{background:var(--p);color:#fff;transform:scale(1.15)}
+.dot.correct-dot{background:#dcfce7;color:#16a34a}
+.dot.wrong-dot{background:#fee2e2;color:#dc2626}
+.dot.answered-dot{background:#dbeafe;color:#2563eb}
+
+/* ---- RESULT PAGE ---- */
+.result-hero{text-align:center;padding:30px 10px}
+.score-ring{
+  width:150px;height:150px;border-radius:50%;margin:0 auto 16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border:8px solid #e2e8f0;position:relative;
+}
+.score-ring.excellent{border-color:#27ae60}
+.score-ring.good{border-color:#2980b9}
+.score-ring.mid{border-color:#f39c12}
+.score-ring.low{border-color:#e74c3c}
+.score-num{font-size:48px;font-weight:900;line-height:1}
+.score-unit{font-size:14px;color:var(--tl)}
+.score-label{font-size:18px;font-weight:700;margin-top:8px}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.stat-box{
+  text-align:center;padding:14px 6px;background:var(--bg);border-radius:10px;
+}
+.stat-box .sn{font-size:22px;font-weight:800;color:var(--p)}
+.stat-box .sl{font-size:10px;color:var(--tl);margin-top:3px}
+
+/* ---- RANKING ---- */
+.rank-card{
+  background:linear-gradient(135deg,#1e3c5a,#0f2840);
+  color:#fff;border-radius:14px;padding:18px 16px;margin:4px 0 14px;
+  box-shadow:0 6px 20px rgba(15,40,64,.25);
+}
+.rank-card .rc-title{
+  font-size:12px;color:#bcd4ec;letter-spacing:1px;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.rank-card .rc-main{
+  display:flex;align-items:flex-end;justify-content:center;gap:8px;margin-bottom:6px;
+}
+.rank-card .rc-rank{
+  font-size:54px;font-weight:900;line-height:1;
+  background:linear-gradient(180deg,#ffd76a,#ff9a3c);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.rank-card .rc-rank-suffix{font-size:18px;font-weight:800;color:#ffd76a;margin-bottom:6px}
+.rank-card .rc-sub{text-align:center;font-size:13px;color:#dbe8f5}
+.rank-card .rc-sub b{color:#ffd76a;font-size:15px}
+.rank-card .rc-bar{
+  height:8px;border-radius:4px;background:rgba(255,255,255,.15);
+  margin:12px 0 6px;overflow:hidden;
+}
+.rank-card .rc-bar-fill{
+  height:100%;border-radius:4px;background:linear-gradient(90deg,#ffd76a,#ff9a3c);
+  transition:width .8s ease;
+}
+.rank-card .rc-pct{text-align:center;font-size:11px;color:#bcd4ec}
+.rank-board{margin-top:12px;border-top:1px solid rgba(255,255,255,.12);padding-top:10px}
+.rank-board .rb-row{
+  display:flex;align-items:center;gap:10px;padding:6px 4px;font-size:13px;
+}
+.rank-board .rb-no{
+  width:22px;height:22px;flex-shrink:0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;background:rgba(255,255,255,.15);color:#fff;
+}
+.rank-board .rb-row.top1 .rb-no{background:#ffd76a;color:#1e3c5a}
+.rank-board .rb-row.top2 .rb-no{background:#cdd6e0;color:#1e3c5a}
+.rank-board .rb-row.top3 .rb-no{background:#e6a15a;color:#1e3c5a}
+.rank-board .rb-row.top4 .rb-no{background:#9ec7e8;color:#1e3c5a}
+.rank-board .rb-row.top5 .rb-no{background:#a8d8c8;color:#1e3c5a}
+.rank-board .rb-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-board .rb-row.me{background:rgba(255,215,106,.18);border-radius:8px;font-weight:700}
+.rank-board .rb-c{color:#ffd76a;font-weight:700}
+.rank-card .rc-loading{text-align:center;font-size:13px;color:#bcd4ec;padding:14px 0}
+.rank-card .rc-empty{text-align:center;font-size:13px;color:#bcd4ec;padding:14px 0}
+
+.wrong-review{margin-bottom:14px}
+.wrong-item{
+  padding:14px;border-bottom:1px solid var(--bd);cursor:pointer;
+  transition:background .15s;
+}
+.wrong-item:active{background:var(--bg)}
+.wrong-item .wq{
+  font-size:14px;font-weight:500;display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px;
+}
+.wrong-item .wa{font-size:12px}
+.wrong-item .wa .ua{color:var(--d)}
+.wrong-item .wa .ra{color:var(--s);font-weight:600}
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes confetti{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-200px) rotate(720deg);opacity:0}}
+@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.anim-fade{animation:fadeInUp .35s ease-out}
+.anim-slide{animation:slideIn .3s ease-out}
+
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
+.confetti-piece{
+  position:absolute;width:10px;height:10px;border-radius:2px;
+  animation:confetti 1.5s ease-out forwards;
+}
+
+.toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:#2c3e50;color:#fff;padding:10px 24px;
+  border-radius:20px;font-size:13px;z-index:300;white-space:nowrap;
+  animation:toastAnim 2s ease-out forwards;
+}
+@keyframes toastAnim{0%{opacity:0;top:0}15%{opacity:1;top:20px}85%{opacity:1;top:20px}100%{opacity:0;top:0}}
+
+.loading-dots span{
+  display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--pl);
+  animation:dotBounce 1.4s infinite ease-in-out both;margin:0 1px;
+}
+.loading-dots span:nth-child(1){animation-delay:-.32s}
+.loading-dots span:nth-child(2){animation-delay:-.16s}
+@keyframes dotBounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+
+/* mobile tweaks */
+@media(max-width:400px){
+  .hero-card .hero-title{font-size:19px}
+  .question-text{font-size:15px}
+  .opt-item{font-size:14px;padding:11px 13px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="logo-row"><div class="logo"><img src="golen-logo.png" alt="GOLEN"></div><h1>冠隆电力 · 知识技能刷题</h1></div>
+  <div class="sub">随机50题 · 每题限时30秒</div>
+</div>
+
+<div class="page" id="app"></div>
+
+<script>
+// ====== LOAD QUESTIONS ======
+var ALL_Q = [];
+fetch('questions.json').then(r=>r.json()).then(d=>{
+  ALL_Q = d;
+  console.log('Loaded '+ALL_Q.length+' questions');
+  render();
+}).catch(e=>{
+  document.getElementById('app').innerHTML = '<div style="text-align:center;padding:60px 20px;color:#e74c3c">题目加载失败，请刷新页面重试</div>';
+});
+
+// ====== STATE ======
+var S = {
+  page:'home', // home, quiz, result
+  name:'', dept:'', phone:'',
+  questions:[], // 50 randomly selected
+  idx:0,
+  answers:[], // [{selected:[], text:'', correct:null, timeout:false}]
+  showAnswer:false,
+  startTime:null,
+  submitting:false,
+  timerSec:30, timerId:null, _autoJumpIdx:-1, _autoNextTimer:null, // 30秒倒计时
+  _submitId:null,        // 本次提交的记录 id（用于排名定位）
+  _ranking:null,         // {total,rank,myCorrect,percentile,top:[{name,correct,me}]}
+  _rankingLoading:false,
+  _rankingError:false,
+  _reviewMode:false // 错题回顾模式：禁止跳题/返回上题，仅可返回成绩单
+};
+
+// ====== HELPERS ======
+function shuffle(a){var arr=a.slice();for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function normAns(s){if(!s)return'';s=s.trim().toUpperCase().replace(/[、,，\s\|\/]/g,'');return s.split('').sort().join('');}
+function fmtAns(a,t){if(t!=='判断题')return a;var m={'A':'正确','B':'错误','T':'正确','F':'错误'};return m[a]||a;}
+
+// ---- 产品知识挑战赛（8/17 - 8/26，累计答对题数排名）----
+var COMP_START = new Date('2026-08-17T00:00:00');
+var COMP_END   = new Date('2026-08-26T23:59:59');
+function compState(){
+  var now = new Date();
+  var st = {before:false, active:false, after:false, label:'', days:0, hours:0};
+  if(now < COMP_START){st.before = true; st.label = '即将开赛';}
+  else if(now <= COMP_END){st.active = true; st.label = '🔥 火热进行中';}
+  else {st.after = true; st.label = '竞赛已结束';}
+  var diff = now < COMP_START ? (COMP_START - now) : (COMP_END - now);
+  if(diff > 0){
+    st.days = Math.floor(diff / 86400000);
+    st.hours = Math.floor(diff % 86400000 / 3600000);
+  }
+  return st;
+}
+function renderCompBanner(){
+  var cs = compState();
+  var html='<div class="comp-banner anim-fade">';
+  html+='<div class="cb-tag">🏆 产品知识挑战赛</div>';
+  html+='<div class="cb-title">'+cs.label+'</div>';
+  if(cs.before){
+    html+='<div class="cb-desc">8月17日 - 8月26日 · 10天竞赛 · 可多次刷题，累计答对题数排名 · TOP5 神秘大奖</div>';
+    html+='<div class="cb-countdown">⏳ 距开赛还有 <b>'+cs.days+' 天 '+cs.hours+' 小时</b></div>';
+  } else if(cs.active){
+    html+='<div class="cb-desc">8月17日 - 8月26日 · 可多次刷题，累计答对题数持续累加 · TOP5 神秘大奖</div>';
+    html+='<div class="cb-countdown">⏳ 距截止还有 <b>'+cs.days+' 天 '+cs.hours+' 小时</b></div>';
+  } else {
+    html+='<div class="cb-desc">感谢参与！最终榜单已出炉，获奖同事请留意通知 🎉</div>';
+  }
+  html+='</div>';
+  return html;
+}
+
+// Parse options from question text
+function parseOpts(text){
+  // Pattern 1: A. / B、 / C． / D) etc. (support up to H)
+  var p1=/([A-H])[\.、．)）]\s*/g;
+  var matches=[],match;
+  while((match=p1.exec(text))!==null){
+    // 跳过前面紧跟字母的匹配（如"CE、"中的"E"），避免题干内容被误拆为选项
+    if(match.index>0 && /[A-Za-z]/.test(text[match.index-1])) continue;
+    matches.push({l:match[1],i:match.index,e:p1.lastIndex});
+  }
+  if(matches.length>=2){
+    var opts=[],qp=text.substring(0,matches[0].i).trim();
+    for(var i=0;i<matches.length;i++){
+      var s=i<matches.length-1?matches[i+1].i:text.length;
+      opts.push({l:matches[i].l,t:text.substring(matches[i].e,s).trim()});
+    }
+    return{q:qp,opts:opts};
+  }
+  // Pattern 2: A  (letter followed by 2+ spaces)
+  var p2=/([A-H])\s{2,}/g;
+  matches=[];match=null;
+  while((match=p2.exec(text))!==null){
+    // 同样跳过前面紧跟字母的匹配
+    if(match.index>0 && /[A-Za-z]/.test(text[match.index-1])) continue;
+    matches.push({l:match[1],i:match.index,e:p2.lastIndex});
+  }
+  if(matches.length>=2){
+    var opts2=[],qp2=text.substring(0,matches[0].i).trim();
+    for(var i=0;i<matches.length;i++){
+      var s=i<matches.length-1?matches[i+1].i:text.length;
+      opts2.push({l:matches[i].l,t:text.substring(matches[i].e,s).trim()});
+    }
+    return{q:qp2,opts:opts2};
+  }
+  // Fallback: try to split options after （ ） or ( ) marker
+  var markerMatch=text.match(/[（\(]\s*[\)）]/);
+  if(markerMatch){
+    var stem=text.substring(0,markerMatch.index).trim();
+    var optsText=text.substring(markerMatch.index+markerMatch[0].length).trim();
+    if(optsText){
+      var tokens=optsText.split(/\s+/).filter(function(t){return t.length>0;});
+      if(tokens.length>=2&&tokens.length<=8){
+        var labels='ABCDEFGH';
+        var fallbackOpts=[];
+        for(var i=0;i<tokens.length;i++){
+          fallbackOpts.push({l:labels[i],t:tokens[i]});
+        }
+        return{q:stem,opts:fallbackOpts};
+      }
+    }
+  }
+  return{q:text,opts:[]};
+}
+
+// ====== RENDER ======
+function render(){
+  var a=document.getElementById('app');
+  if(S.page==='home')renderHome(a);
+  else if(S.page==='quiz')renderQuiz(a);
+  else if(S.page==='result')renderResult(a);
+}
+
+// ---- HOME ----
+function renderHome(a){
+  var html='';
+  // 竞赛横幅
+  html+=renderCompBanner();
+  // Hero
+  html+='<div class="hero-card anim-fade">';
+  html+='<div class="hero-title">⚡ 知识技能刷题</div>';
+  html+='<div class="hero-desc">欢迎加入冠隆电力！系统将从题库中随机抽取 <b>50道题</b>（仅单选/多选/判断），<b style="color:#f39c12">每题限时30秒</b>，超时自动跳过。答题结束后自动统计成绩。<br><span style="font-size:11px;opacity:.7">⚠️ 答题速度过快（平均每题&lt;4秒）将被标记异常。请独立完成，确保考核真实有效。</span></div>';
+  html+='<div class="hero-stats">';
+  html+='<div class="hero-stat"><div class="hs-num">317</div><div class="hs-label">客观题总量</div></div>';
+  html+='<div class="hero-stat"><div class="hs-num">50</div><div class="hs-label">随机抽取</div></div>';
+  html+='<div class="hero-stat"><div class="hs-num">⏱30s</div><div class="hs-label">每题限时</div></div>';
+  html+='</div></div>';
+
+  // Form
+  html+='<div class="form-card anim-fade">';
+  html+='<div class="fc-title">📋 请填写个人信息</div>';
+  html+='<div class="form-group"><label class="form-label">姓名 <span style="color:#e74c3c">*</span></label><input type="text" class="form-input" id="fname" placeholder="请输入你的姓名" maxlength="20" value="'+esc(S.name)+'"><div class="form-hint">请输入姓名</div></div>';
+  html+='<div class="form-group"><label class="form-label">部门 <span style="color:#e74c3c">*</span></label><select class="form-select" id="fdept"><option value="">请选择部门</option>'+['国内销售','海外销售','售前技术','售后服务','研发','生产','质量','采购','市场','财务','人力资源','行政'].map(function(d){return'<option value="'+d+'"'+(S.dept===d?' selected':'')+'>'+d+'</option>';}).join('')+'</select></div>';
+  html+='<div class="form-group"><label class="form-label">手机号 <span style="color:#e74c3c">*</span></label><input type="tel" class="form-input" id="fphone" placeholder="请输入11位手机号" maxlength="11" value="'+esc(S.phone)+'"></div>';
+  html+='</div>';
+
+  html+='<button class="btn btn-primary btn-full" onclick="startQuiz()" style="height:52px;font-size:17px">🚀 开始刷题</button>';
+
+  a.innerHTML=html;
+}
+
+function startQuiz(){
+  var name=document.getElementById('fname').value.trim();
+  var dept=document.getElementById('fdept').value;
+  var phone=document.getElementById('fphone').value.trim();
+  var valid=true;
+
+  if(!name){document.getElementById('fname').classList.add('error');valid=false;}
+  else{document.getElementById('fname').classList.remove('error');}
+  if(!dept){document.getElementById('fdept').style.borderColor='#e74c3c';valid=false;}
+  if(!phone||!/^1[3-9]\d{9}$/.test(phone)){
+    document.getElementById('fphone').classList.add('error');
+    valid=false;
+  }
+
+  if(!valid){showToast('请完整填写所有信息');return;}
+
+  S.name=name;S.dept=dept;S.phone=phone;
+  // 仅保留单选题、判断题、多选题，且排除无实际答案的题目（如质量体系类"原卷未标注答案"）
+  var filtered = ALL_Q.filter(function(q){
+    if(q.t!=='单选题' && q.t!=='判断题' && q.t!=='多选题') return false;
+    var ans = (q.a||'').trim();
+    if(!ans || ans==='（原卷未标注答案）') return false;
+    return true;
+  });
+  S.questions=shuffle(filtered).slice(0,50);
+  S.answers=S.questions.map(function(){return{selected:[],text:'',correct:null,timeout:false};});
+  S.idx=0;S.showAnswer=false;S.startTime=new Date();S._reviewMode=false;
+  S.page='quiz';
+  stopTimer();
+  render();
+  window.scrollTo(0,0);
+}
+
+// ---- QUIZ ----
+function renderQuiz(a){
+  var q=S.questions[S.idx];
+  var ans=S.answers[S.idx];
+  var total=S.questions.length;
+  var i=S.idx;
+  var progress=Math.round((i/total)*100);
+  var parsed=parseOpts(q.q);
+  // 判断题始终显示"正确"/"错误"两个选项
+  if(q.t==='判断题'){hasOpts=true;parsed.opts=[{l:'A',t:'正确'},{l:'B',t:'错误'}];}
+  var hasOpts=hasOpts!==undefined?hasOpts:(q.t==='单选题'||q.t==='多选题');
+
+  var answered=ans.correct!==null||(ans.text&&ans.text.length>0)||(ans.selected.length>0&&S.showAnswer);
+  var diffTag=q.d==='简单'?'tag-d1':q.d==='中等'?'tag-d2':'tag-d3';
+  var typeIcon=q.t==='单选题'?'①':q.t==='多选题'?'☑':q.t==='判断题'?'✓✗':q.t==='填空题'?'✎':'✍';
+
+  var html='';
+
+  // Progress
+  html+='<div class="progress-wrap"><div class="progress-info"><span>第 '+(i+1)+'/'+total+' 题</span><span>已完成 '+i+' 题</span></div><div class="progress-bar"><div class="progress-fill" style="width:'+progress+'%"></div></div></div>';
+
+  // Quiz card
+  html+='<div class="quiz-card anim-slide">';
+  html+='<div class="quiz-meta">';
+  html+='<span class="tag tag-t">'+typeIcon+' '+esc(q.t)+'</span>';
+  html+='<span class="tag tag-c">'+esc(q.c)+'</span>';
+  html+='<span class="tag '+diffTag+'">'+q.d+'</span>';
+  html+='</div>';
+
+  // Timer display — 纯CSS圆环，彻底避免SVG兼容问题
+  var sec=S.timerSec;
+  var pct=sec/30;
+  var timerColor='safe';
+  if(sec<=10){timerColor='danger';}else if(sec<=20){timerColor='warn';}
+  if(ans.timeout||answered){
+    html+='<div class="timer-wrap" id="timerWrap">';
+    html+='<div class="timer-label"><span>'+(ans.timeout?'⏰ 已超时':'✅ 已作答')+'</span></div>';
+    html+='</div>';
+  }else{
+    html+='<div class="timer-wrap" id="timerWrap">';
+    html+='<div class="timer-ring '+timerColor+'" id="timerRing" style="--timer-pct:'+(pct*100)+'%">';
+    html+='<div class="timer-num '+timerColor+(sec<=10?' pulse':'')+'" id="timerNum">'+sec+'</div>';
+    html+='</div>';
+    html+='<div class="timer-label"><span id="timerLabel">剩余时间</span></div>';
+    html+='</div>';
+  }
+
+  html+='<div class="question-num">Q'+(i+1)+'</div>';
+  html+='<div class="question-text">'+esc(parsed.q)+'</div>';
+
+  // Options
+  if(hasOpts){
+    html+='<div class="options-list">';
+    parsed.opts.forEach(function(o){
+      var cls='opt-item';
+      if(answered||S.showAnswer){
+        var isCor=normAns(q.a).indexOf(o.l)!==-1;
+        var wasSel=ans.selected.indexOf(o.l)!==-1;
+        if(isCor)cls+=' correct';
+        else if(wasSel)cls+=' wrong';
+      }else if(ans.selected.indexOf(o.l)!==-1){
+        cls+=' selected';
+      }
+      var dis=(answered||S.showAnswer)?' style="pointer-events:none"':'';
+      html+='<div class="'+cls+'" data-opt="'+o.l+'"'+dis+'>';
+      html+='<span class="opt-label">'+o.l+'</span><span>'+esc(o.t)+'</span></div>';
+    });
+    html+='</div>';
+    if(q.t==='多选题'&&!answered&&!S.showAnswer){
+      html+='<div style="font-size:11px;color:var(--tl);margin-top:8px">💡 多选题，点击多个选项后提交</div>';
+    }
+  }else{
+    // Fill/essay
+    if(answered||S.showAnswer){
+      html+='<div class="answer-box"><div class="ab-label">📝 参考答案</div><div class="ab-content">'+esc(q.a)+'</div></div>';
+      if(ans.text)html+='<div style="margin-top:10px;padding:10px;background:#f0fdf4;border-radius:10px;font-size:13px">✏️ 你的答案：'+esc(ans.text)+'</div>';
+    }else{
+      html+='<textarea class="text-input" id="textAns" placeholder="请输入你的答案...">'+esc(ans.text||'')+'</textarea>';
+    }
+  }
+
+  // Answer feedback (for auto-scored questions)
+  if(ans.timeout){
+    html+='<div class="feedback-badge wrong">⏰ 时间到！超时未作答</div>';
+    html+='<div class="answer-box"><div class="ab-label">正确答案</div><div class="ab-content">'+esc(fmtAns(q.a,q.t))+'</div></div>';
+  }else if(answered&&hasOpts){
+    if(ans.correct===true)html+='<div class="feedback-badge correct">✅ 回答正确！</div>';
+    else if(ans.correct===false){
+      html+='<div class="feedback-badge wrong">❌ 回答错误</div>';
+      html+='<div class="answer-box"><div class="ab-label">正确答案</div><div class="ab-content">'+esc(fmtAns(q.a,q.t))+'</div></div>';
+    }
+  }
+
+  // 3秒自动跳转提示
+  if(!S._reviewMode&&!ans.timeout&&ans.correct!==null){
+    if(i<total-1)html+='<div style="text-align:center;font-size:12px;color:#64748b;margin-top:12px">⏳ 3 秒后自动进入下一题 ...</div>';
+    else html+='<div style="text-align:center;font-size:12px;color:#b45309;margin-top:12px;font-weight:600">⏳ 3 秒后自动提交成绩 ...</div>';
+  }
+
+  html+='</div>'; // close quiz-card
+
+  // Navigation
+  html+='<div class="nav-row">';
+  if(S._reviewMode){
+    // 错题回顾模式：仅允许返回成绩单，禁止前进/后退/跳题
+    html+='<button class="btn btn-primary" onclick="goResult()">← 返回成绩单</button>';
+  }else if(answered||S.showAnswer||ans.timeout){
+    if(i<total-1)html+='<button class="btn btn-primary" onclick="nextQ()">下一题 →</button>';
+    else html+='<button class="btn btn-success" onclick="finishQuiz()">✅ 提交成绩</button>';
+  }else{
+    // 未作答时：多选必须点"确认提交"，单选/判断题点击选项即自动提交，均不可跳过
+    if(q.t==='多选题'){
+      html+='<button class="btn btn-primary" onclick="submitMulti()">确认提交</button>';
+    }else if(q.t==='填空题'||q.t==='简答题'){
+      html+='<button class="btn btn-primary" onclick="submitText()">提交答案</button>';
+    }
+  }
+  html+='</div>';
+
+  a.innerHTML=html;
+
+  // Bind option clicks
+  a.querySelectorAll('.opt-item[data-opt]').forEach(function(el){
+    el.onclick=function(){
+      var o=this.dataset.opt;
+      if(q.t==='单选题'||q.t==='判断题'){
+        ans.selected=[o];submitSingle(o);
+      }else if(q.t==='多选题'){
+        // 仅切换当前选项的选中样式，不触发整体 render，避免倒计时被重置
+        var idx=ans.selected.indexOf(o);
+        if(idx===-1){ans.selected.push(o);this.classList.add('selected');}
+        else{ans.selected.splice(idx,1);this.classList.remove('selected');}
+      }
+    };
+  });
+
+  // Start timer for unanswered questions
+  if(!answered && !ans.timeout){
+    startTimer();
+  }
+}
+
+function submitSingle(opt){stopTimer();var q=S.questions[S.idx];S.answers[S.idx].correct=normAns(opt)===normAns(q.a);S.showAnswer=true;scheduleAutoNext();render();}
+function submitMulti(){stopTimer();var q=S.questions[S.idx],ans=S.answers[S.idx];if(ans.selected.length===0)return;ans.correct=normAns(ans.selected.join(''))===normAns(q.a);S.showAnswer=true;scheduleAutoNext();render();}
+
+// ====== TIMER ======
+function startTimer(){
+  stopTimer();
+  S.timerSec=30;
+  S.timerId=setInterval(function(){
+    S.timerSec--;
+    // Update timer display smoothly without full re-render
+    updateTimerDOM();
+    if(S.timerSec<=0){
+      stopTimer();
+      handleTimeout();
+    }
+  },1000);
+}
+
+function stopTimer(){
+  if(S.timerId){clearInterval(S.timerId);S.timerId=null;}
+}
+
+function updateTimerDOM(){
+  var sec=S.timerSec;
+  var pct=sec/30;
+  var ring=document.getElementById('timerRing');
+  var num=document.getElementById('timerNum');
+  if(!ring||!num)return; // 静默跳过，不停止计时器
+  ring.style.setProperty('--timer-pct',(pct*100)+'%');
+  num.textContent=sec;
+  var col='safe';
+  if(sec<=10){col='danger';}else if(sec<=20){col='warn';}
+  ring.className='timer-ring '+col;
+  num.className='timer-num '+col+(sec<=5?' pulse':'');
+  var label=document.getElementById('timerLabel');
+  if(label&&sec<=5){label.className='timeout-warn';}
+}
+
+function handleTimeout(){
+  var ans=S.answers[S.idx];
+  ans.timeout=true;
+  ans.correct=false;
+  S.showAnswer=true;
+  S._autoJumpIdx=S.idx;
+  render();
+  setTimeout(function(){
+    if(S._autoJumpIdx===S.idx){nextQ();}
+  },5000);
+}
+
+// 提交答案后 3 秒自动进入下一题（最后一题则自动提交成绩）
+function scheduleAutoNext(){
+  if(S._reviewMode)return;
+  S._autoJumpIdx=S.idx;
+  if(S._autoNextTimer)clearTimeout(S._autoNextTimer);
+  S._autoNextTimer=setTimeout(function(){
+    if(S._autoJumpIdx===S.idx){nextQ();}
+  },3000);
+}
+
+function submitText(){
+  var q=S.questions[S.idx],ans=S.answers[S.idx];
+  var el=document.getElementById('textAns');if(el)ans.text=el.value.trim();
+  ans.correct=null;S.showAnswer=true;render();
+  var reveal=document.querySelector('.answer-box');if(reveal)reveal.scrollIntoView({behavior:'smooth'});
+}
+function nextQ(){
+  stopTimer();S._autoJumpIdx=-1;
+  if(S._autoNextTimer){clearTimeout(S._autoNextTimer);S._autoNextTimer=null;}
+  if(S.idx<S.questions.length-1){S.idx++;S.showAnswer=!!(S.answers[S.idx].correct!==null||S.answers[S.idx].text);S.timerSec=30;render();window.scrollTo(0,0);}
+  else{finishQuiz();}
+}
+function prevQ(){
+  stopTimer();S._autoJumpIdx=-1;
+  if(S.idx>0){S.idx--;var a=S.answers[S.idx];S.showAnswer=!!(a.correct!==null||a.text);S.timerSec=30;render();window.scrollTo(0,0);}
+}
+function jumpTo(j){
+  stopTimer();S._autoJumpIdx=-1;
+  S.idx=j;var a=S.answers[j];S.showAnswer=!!(a.correct!==null||a.text);S.timerSec=30;render();window.scrollTo(0,0);
+}
+
+// ---- FINISH & RESULT ----
+function finishQuiz(){
+  stopTimer();
+  var endTime=new Date();
+  var total=50;
+  var correct=S.answers.filter(function(a){return a.correct===true;}).length;
+  var wrong=total-correct;
+  var score=Math.round((correct/total)*100);
+  var minutes=Math.round((endTime-S.startTime)/60000);
+
+  var totalSec = Math.round((endTime - S.startTime) / 1000);
+  var avgSec = Math.round(totalSec / total);
+  var suspicious = avgSec < 4;
+
+  S._result={correct:correct,wrong:wrong,score:score,minutes:minutes,total:total,totalSec:totalSec,avgSec:avgSec,suspicious:suspicious};
+  S._reviewMode=false;
+  S.page='result';
+  render();
+  window.scrollTo(0,0);
+
+  // Submit to API
+  submitResult();
+}
+
+function renderBoardHTML(title, top, myRank, total, unit, isBest){
+  var h='<div style="margin-top:12px">';
+  h+='<div style="font-weight:700;font-size:13px;margin:0 0 4px;padding-left:8px;border-left:3px solid #ffd76a;color:#fff">'+title+'</div>';
+  if(!top||top.length===0){
+    h+='<div style="font-size:12px;color:#bcd4ec;padding:6px 0">暂无足够数据，继续刷题解锁排行～</div>';
+  }else{
+    h+='<div style="font-size:12px;color:#cfe3f7;margin-bottom:6px">我的排名：<b style="color:#ffd76a">'+myRank+'</b> / '+total+' 人</div>';
+    h+='<div class="rank-board">';
+    for(var ti=0;ti<top.length;ti++){
+      var tp=top[ti];
+      var meCls=tp.me?' me':'';
+      var topCls=ti===0?' top1':ti===1?' top2':ti===2?' top3':ti===3?' top4':ti===4?' top5':'';
+      h+='<div class="rb-row'+meCls+topCls+'">';
+      h+='<div class="rb-no">'+(ti+1)+'</div>';
+      h+='<div class="rb-name">'+esc(tp.me?tp.name+'（你）':tp.name)+(tp.suspicious?' ⚡':'')+'</div>';
+      var valTxt;
+      if(unit==='%') valTxt=Math.round(tp.val*100)+'%';
+      else if(isBest) valTxt=tp.val+' 题(最佳)';
+      else valTxt=tp.val+' 题'+(tp.times>1?' ×'+tp.times:'');
+      h+='<div class="rb-c">'+valTxt+'</div>';
+      h+='</div>';
+    }
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function renderResult(a){
+  var r=S._result;
+  var cls=r.score>=90?'excellent':r.score>=70?'good':r.score>=50?'mid':'low';
+  var msg=r.score>=90?'🎉 太棒了！':r.score>=70?'👍 不错，继续加油！':r.score>=50?'💪 还需努力！':'📚 要多花时间学习哦！';
+
+  var html='<div class="quiz-card anim-fade"><div class="result-hero">';
+  html+='<div class="score-ring '+cls+'"><div class="score-num">'+r.score+'</div><div class="score-unit">/ 100分</div></div>';
+  html+='<div class="score-label">'+msg+'</div>';
+  html+='<div style="font-size:13px;color:var(--tl);margin-top:4px">'+S.name+' · '+S.dept+' · 用时 '+r.minutes+' 分钟</div>';
+  html+='</div>';
+
+  html+='<div class="stats-grid">';
+  html+='<div class="stat-box"><div class="sn">'+r.total+'</div><div class="sl">总题数</div></div>';
+  html+='<div class="stat-box"><div class="sn" style="color:#16a34a">'+r.correct+'</div><div class="sl">✅ 正确</div></div>';
+  html+='<div class="stat-box"><div class="sn" style="color:#dc2626">'+r.wrong+'</div><div class="sl">❌ 错误</div></div>';
+  html+='<div class="stat-box"><div class="sn" style="color:#6b7280">'+r.minutes+'m</div><div class="sl">⏱ 用时</div></div>';
+  html+='</div></div>';
+
+  // ===== 竞赛累计卡片 =====
+  var cs2=compState();
+  html+='<div class="quiz-card anim-fade" style="background:linear-gradient(135deg,#7f1d1d,#c0392b);color:#fff;text-align:center">';
+  html+='<div style="font-size:14px;font-weight:700;margin-bottom:6px">🏆 产品知识挑战赛</div>';
+  if(S._ranking){
+    html+='<div style="font-size:13px;line-height:1.7">本次答对 <b style="color:#ffd76a;font-size:16px">'+r.correct+'</b> 题 · 累计答对 <b style="color:#ffd76a;font-size:16px">'+S._ranking.myCorrect+'</b> 题'+(S._ranking.myCount>1?'（'+S._ranking.myCount+'次）':'')+'</div>';
+  }else{
+    html+='<div style="font-size:13px;line-height:1.7">本次答对 <b style="color:#ffd76a;font-size:16px">'+r.correct+'</b> 题 · 累计统计中...</div>';
+  }
+  if(cs2.active){
+    html+='<div style="font-size:11px;opacity:.85;margin-top:5px">⏳ 距8月26日截止还剩 <b style="color:#ffd76a">'+cs2.days+' 天 '+cs2.hours+' 小时</b> · 多刷多累计，冲刺TOP5神秘大奖！</div>';
+  }else if(cs2.before){
+    html+='<div style="font-size:11px;opacity:.85;margin-top:5px">竞赛将于8月17日开赛，当前答题仍计入累计成绩 ⚡</div>';
+  }else{
+    html+='<div style="font-size:11px;opacity:.85;margin-top:5px">竞赛已结束，感谢参与！获奖名单请留意通知 🎉</div>';
+  }
+  html+='</div>';
+
+  // ===== Ranking card (reads online quiz data) =====
+  if(S._rankingLoading){
+    html+='<div class="quiz-card anim-fade"><div class="rank-card"><div class="rc-loading">🏆 正在计算你在全部答题者中的排名<span class="loading-dots"><span></span><span></span><span></span></span></div></div></div>';
+  }else if(S._rankingError){
+    html+='<div class="quiz-card anim-fade"><div class="rank-card"><div class="rc-empty">⚠️ 排名数据暂时无法获取，稍后可在腾讯文档查看</div></div></div>';
+  }else if(S._ranking){
+    var rk=S._ranking;
+    html+='<div class="quiz-card anim-fade"><div class="rank-card">';
+    html+='<div class="rc-title">🏆 产品知识挑战赛 · 排行榜</div>';
+    if(rk.total>1){
+      html+='<div class="rc-sub">你累计答对 <b>'+rk.myCorrect+'</b> 题（共 '+rk.myCount+' 次）· 超越 <b>'+rk.percentile+'%</b> 参赛者</div>';
+      html+='<div style="font-size:10px;color:#bcd4ec;margin-top:4px">⚡ = 答题用时异常，可能非本人独立作答</div>';
+    }else{
+      html+='<div class="rc-loading">🎉 你是第 <b>1</b> 位加入竞赛的同事！<br>继续刷题累计更多答对数，冲刺神秘大奖~</div>';
+    }
+    html+=renderBoardHTML('📚 勤奋榜 · 累计答对题数', rk.top, rk.rank, rk.total, '题', false);
+    html+=renderBoardHTML('🥇 最佳表现榜 · 单次最高正确', rk.topBest, rk.rankBest, rk.totalBest, '题', true);
+    html+=renderBoardHTML('💯 绝对实力榜 · 累计正确率(≥20题)', rk.topRate, rk.rankRate, rk.totalRate, '%', false);
+    html+='</div></div>';
+  }
+
+  // Wrong list
+  // Suspicious speed warning
+  if(r.suspicious){
+    html+='<div class="quiz-card anim-fade" style="background:#fff3cd;border:2px solid #f39c12;text-align:center;padding:16px">';
+    html+='<div style="font-size:28px;margin-bottom:6px">⚠️</div>';
+    html+='<div style="font-size:15px;font-weight:700;color:#856404;margin-bottom:4px">答题用时异常</div>';
+    html+='<div style="font-size:13px;color:#856404">总用时 <b>'+Math.floor(r.totalSec/60)+'分'+Math.floor(r.totalSec%60)+'秒</b>，平均每题仅 <b>'+r.avgSec+' 秒</b></div>';
+    html+='<div style="font-size:12px;color:#856404;margin-top:4px">答题速度过快，成绩可能被标记为异常。如确系本人独立作答，请联系管理员说明。</div>';
+    html+='</div>';
+  }
+
+  if(r.wrong>0){
+    html+='<div class="quiz-card anim-fade"><div style="font-size:15px;font-weight:700;color:var(--p);margin-bottom:12px">🔍 错题回顾</div><div class="wrong-review">';
+    for(var i=0;i<S.questions.length;i++){
+      var ans=S.answers[i];
+      if(ans.correct===false||ans.correct===null){
+        var q=S.questions[i];
+        var icon=ans.timeout?'⏰':ans.correct===false?'❌':'⏭';
+        html+='<div class="wrong-item" onclick="reviewOne('+i+')">';
+        html+='<div class="wq">'+icon+' '+esc(q.q.substring(0,70))+'...</div>';
+        html+='<div class="wa">';
+        if(ans.timeout)html+='<span class="ua">超时未作答</span> | 正确：<span class="ra">'+esc(fmtAns(q.a,q.t))+'</span>';
+        else if(ans.correct===false)html+='你的答案：<span class="ua">'+esc(fmtAns(ans.selected.join(''),q.t))+'</span> | 正确：<span class="ra">'+esc(fmtAns(q.a,q.t))+'</span>';
+        else html+='<span class="ua">未作答</span> | 正确：<span class="ra">'+esc(fmtAns(q.a,q.t))+'</span>';
+        html+='</div></div>';
+      }
+    }
+    html+='</div></div>';
+  }
+
+  // Submit status
+  html+='<div class="quiz-card anim-fade" style="text-align:center;background:#f0fdf4;border:1px solid #bbf7d0">';
+  if(S.submitting)html+='<div style="font-size:14px;color:#166534">📤 正在提交成绩... <span class="loading-dots"><span></span><span></span><span></span></span></div>';
+  else if(S._submitted)html+='<div style="font-size:14px;color:#166534;font-weight:600">✅ 成绩已成功提交！</div>';
+  else if(S._submitError)html+='<div style="font-size:14px;color:#dc2626;font-weight:600">⚠️ 成绩提交失败，请点击下方"重试提交"</div>';
+  else html+='<div style="font-size:14px;color:#166534">📤 正在提交成绩...</div>';
+  html+='</div>';
+
+  html+='<div style="height:8px"></div>';
+  if(S._submitError)html+='<button class="btn btn-primary btn-full" onclick="retrySubmit()" style="margin-bottom:8px">🔄 重试提交成绩</button>';
+  html+='<button class="btn btn-outline btn-full" onclick="goHome()">🏠 重新刷题</button>';
+
+  a.innerHTML=html;
+
+  // Confetti for high scores
+  if(r.score>=80)launchConfetti();
+}
+
+function reviewOne(i){
+  S.idx=i;S.showAnswer=true;S.page='quiz';S._reviewMode=true;
+  render();window.scrollTo(0,0);
+}
+
+function goResult(){
+  stopTimer();S._autoJumpIdx=-1;S._reviewMode=false;
+  S.page='result';render();window.scrollTo(0,0);
+}
+
+function goHome(){
+  stopTimer();
+  S.page='home';S.name='';S.dept='';S.phone='';
+  S.questions=[];S.answers=[];S.idx=0;S.showAnswer=false;
+  S._submitted=false;S._submitError=false;S.submitting=false;S._reviewMode=false;
+  render();window.scrollTo(0,0);
+}
+
+// ---- SUBMIT TO API ----
+// 在线存储：kvdb.io（原 jsonblob 的 PUT/POST 已被 Cloudflare 拦截(403)，2026-08-12 迁移到 kvdb）
+// 数据经 sync_to_docs.py 每3小时同步到腾讯文档
+var KV_URL='https://kvdb.io/ToKgEMPvLUDU4CCAybQzfE/records';
+
+// 从 kvdb 读取记录数组（kvdb 返回纯文本，404/空值均视为空数组）
+// 注意：kvdb GET 带远期 expires 头（约1个月），浏览器会缓存陈旧数据，
+// 导致 read-modify-write 覆盖丢数据，必须加 cache:'no-store' 禁用缓存！
+function kvGet(){
+  return fetch(KV_URL,{cache:'no-store'})
+    .then(function(res){return res.text();})
+    .then(function(text){
+      if(!text||text==='null'||text==='Not Found')return [];
+      try{var arr=JSON.parse(text);return Array.isArray(arr)?arr:[];}
+      catch(e){return [];}
+    });
+}
+
+function submitResult(){
+  var r=S._result;
+  S.submitting=true;
+
+  // Detect suspiciously fast completion (average < 4 seconds per question)
+  var totalSec = Math.round((new Date() - S.startTime) / 1000);
+  var avgSec = Math.round(totalSec / r.total);
+  var suspicious = avgSec < 4;
+  var suspiciousReason = suspicious ? ('平均每题仅 ' + avgSec + ' 秒，疑似非本人作答') : '';
+
+  var data={
+    id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    name:S.name,department:S.dept,phone:S.phone,
+    _rankInfo:{correct:r.correct,score:r.score,minutes:r.minutes,avgSec:avgSec,suspicious:suspicious},
+    startTime:S.startTime.toISOString(),
+    submitTime:new Date().toISOString(),
+    total:r.total,correct:r.correct,wrong:r.wrong,
+    score:r.score,minutes:r.minutes,avgSec:avgSec,suspicious:suspicious,
+    synced:false
+  };
+
+  // Read-modify-write to kvdb (append new record)
+  kvGet()
+  .then(function(existing){
+    var records=Array.isArray(existing)?existing:[];
+    records.push(data);
+    return fetch(KV_URL,{
+      method:'PUT',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(records)
+    });
+  })
+  .then(function(res){
+    // kvdb 的 PUT 返回 200 但响应体为空，res.json() 会抛错导致误报提交失败
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    return res.text().catch(function(){return '';});
+  })
+  .then(function(){
+    S._submitted=true;S.submitting=false;
+    S._submitId=data.id;
+    if(S.page==='result')render();
+    setTimeout(fetchRanking, 700);
+    try{
+      var backup=JSON.parse(localStorage.getItem('quiz_results')||'[]');
+      backup.push(data);
+      localStorage.setItem('quiz_results',JSON.stringify(backup.slice(-50)));
+    }catch(e){}
+  }).catch(function(){
+    S._submitError=true;S.submitting=false;
+    try{
+      var b=JSON.parse(localStorage.getItem('quiz_results')||'[]');
+      b.push(data);
+      localStorage.setItem('quiz_results',JSON.stringify(b.slice(-50)));
+    }catch(e){}
+    if(S.page==='result')render();
+  });
+}
+
+// 提交失败后的手动重试：从本地备份取最新一条记录重新写入 kvdb
+function retrySubmit(){
+  var backups=[];
+  try{backups=JSON.parse(localStorage.getItem('quiz_results')||'[]');}catch(e){}
+  if(!backups.length){showToast('未找到本地备份记录，请重新刷题');return;}
+  var rec=backups[backups.length-1];
+  S.submitting=true;S._submitError=false;render();
+  kvGet()
+  .then(function(existing){
+    var records=Array.isArray(existing)?existing:[];
+    var dup=records.some(function(r){return r&&r.id===rec.id;});
+    if(!dup)records.push(rec);
+    return fetch(KV_URL,{
+      method:'PUT',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(records)
+    });
+  })
+  .then(function(res){
+    // kvdb 的 PUT 返回 200 但响应体为空，res.json() 会抛错导致误报提交失败
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    return res.text().catch(function(){return '';});
+  })
+  .then(function(){
+    S._submitted=true;S.submitting=false;
+    S._submitId=rec.id;
+    if(S.page==='result')render();
+    setTimeout(fetchRanking,700);
+  })
+  .catch(function(){
+    S._submitError=true;S.submitting=false;
+    if(S.page==='result')render();
+  });
+}
+
+// ---- RANKING: 竞赛模式 - 按手机号聚合，累计答对题数排名 ----
+function fetchRanking(){
+  if(!S._submitId && !(S._result)){return;}
+  S._rankingLoading=true;S._rankingError=false;
+  if(S.page==='result')render();
+
+  kvGet()
+    .then(function(records){
+      records = Array.isArray(records)?records:[];
+      // 仅保留含有效姓名/答对数的记录，且排除竞赛正式开始前（8/17 00:00 前）的测试数据
+      var COMP_MS = COMP_START.getTime();
+      var valid = records.filter(function(r){
+        if(!r || !r.name || !(r.correct!==undefined||r._rankInfo)) return false;
+        var t = r.submitTime ? new Date(r.submitTime).getTime()
+                : (r.startTime ? new Date(r.startTime).getTime() : 0);
+        return t >= COMP_MS;
+      });
+
+      // ---- 按手机号（无手机号按姓名）聚合，累计答对题数 ----
+      var groups = {};
+      valid.forEach(function(r){
+        var key = (r.phone||'') || (r.name||'');
+        if(!key)return;
+        var g = groups[key];
+        if(!g){
+          g = groups[key] = {name:r.name, correct:0, totalSum:0, bestSingle:0, scoreSum:0, minutes:0, count:0,
+                             phone:r.phone||'', suspicious:false, lastTime:0};
+        }
+        var cc=(r.correct!==undefined?r.correct:(r._rankInfo?r._rankInfo.correct:0));
+        var tt=(r.total!==undefined?r.total:0);
+        var ss=(r.score!==undefined?r.score:(r._rankInfo?r._rankInfo.score:0));
+        var mm=(r.minutes!==undefined?r.minutes:(r._rankInfo?r._rankInfo.minutes:0));
+        g.correct += cc;
+        g.totalSum += tt;
+        g.scoreSum += ss;
+        g.minutes += mm;
+        g.count++;
+        if(cc>g.bestSingle)g.bestSingle=cc;
+        var t=r.submitTime?new Date(r.submitTime).getTime():0;
+        if(t>=g.lastTime){g.lastTime=t;g.name=r.name;}
+        if(r.suspicious || (r._rankInfo&&r._rankInfo.suspicious))g.suspicious=true;
+      });
+      var people=[];for(var k in groups)people.push(groups[k]);
+
+      // 当前答题者累计成绩
+      var myKey = S.phone || S.name || '';
+      var myGroup = myKey?groups[myKey]:null;
+      var myCorrect = myGroup?myGroup.correct:(S._result?S._result.correct:0);
+      var myTotal = myGroup?myGroup.totalSum:(S._result?S._result.total:0);
+      var myBest = myGroup?myGroup.bestSingle:(S._result?S._result.correct:0);
+      var myCount = myGroup?myGroup.count:1;
+
+      // 通用取值：correct=累计答对, best=单次最高正确, rate=累计正确率
+      function valOf(p, kind){
+        if(kind==='correct') return p.correct;
+        if(kind==='best') return p.bestSingle;
+        if(kind==='rate') return p.totalSum>0 ? p.correct/p.totalSum : -1;
+        return 0;
+      }
+      // 构建榜单：按 kind 排序取 TOP5，并算“我的排名”
+      function buildTop(kind, minTotal){
+        var arr=people.filter(function(p){return minTotal? p.totalSum>=minTotal : true;});
+        arr.sort(function(a,b){return valOf(b,kind)-valOf(a,kind);});
+        var myVal=valOf(myGroup||{correct:0,totalSum:0,bestSingle:0}, kind);
+        var myRank=1;
+        for(var i=0;i<arr.length;i++){ if(valOf(arr[i],kind)>myVal)myRank++; }
+        var top=[];var addedMe=false;
+        for(var j=0;j<arr.length && top.length<5;j++){
+          var p=arr[j];
+          var isMe=(p.phone && S.phone && p.phone===S.phone);
+          if(isMe)addedMe=true;
+          top.push({name:p.name, val:valOf(p,kind), me:isMe, suspicious:p.suspicious, times:p.count, best:p.bestSingle, rate:p.totalSum?Math.round(p.correct/p.totalSum*100):0});
+        }
+        if(!addedMe && myGroup){
+          top.push({name:S.name||'你', val:myVal, me:true, suspicious:false, times:myCount, best:myBest, rate: myTotal?Math.round(myCorrect/myTotal*100):0});
+        }
+        return {top:top, myRank:myRank, total:arr.length};
+      }
+
+      // 三榜：勤奋榜(累计答对) / 最佳表现榜(单次最高) / 绝对实力榜(累计正确率,≥20题)
+      var bCorrect=buildTop('correct', 0);
+      var bBest=buildTop('best', 0);
+      var bRate=buildTop('rate', 20);
+
+      var total=bCorrect.total;
+      var rank=bCorrect.myRank;
+      var percentile=total>1?Math.round((total-rank)/total*100):0;
+
+      S._ranking={total:total, rank:rank, myCorrect:myCorrect, myCount:myCount,
+                  percentile:percentile,
+                  top:bCorrect.top,
+                  topBest:bBest.top, rankBest:bBest.myRank, totalBest:bBest.total,
+                  topRate:bRate.top, rankRate:bRate.myRank, totalRate:bRate.total};
+      S._rankingLoading=false;
+      if(S.page==='result')render();
+    })
+    .catch(function(){
+      S._rankingLoading=false;S._rankingError=true;
+      if(S.page==='result')render();
+    });
+}
+
+// ---- CONFETTI ----
+function launchConfetti(){
+  var colors=['#27ae60','#2980b9','#f39c12','#e74c3c','#8e44ad','#1abc9c','#f1c40f'];
+  var container=document.createElement('div');
+  container.className='confetti-container';
+  document.body.appendChild(container);
+  for(var i=0;i<60;i++){
+    var p=document.createElement('div');
+    p.className='confetti-piece';
+    p.style.left=Math.random()*100+'%';
+    p.style.top=(60+Math.random()*20)+'%';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDelay=Math.random()*0.8+'s';
+    p.style.animationDuration=(1+Math.random()*1.5)+'s';
+    p.style.width=(6+Math.random()*8)+'px';
+    p.style.height=(6+Math.random()*8)+'px';
+    container.appendChild(p);
+  }
+  setTimeout(function(){container.remove();},3000);
+}
+
+// ---- TOAST ----
+function showToast(msg){
+  var t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(function(){t.remove();},2100);
+}
+
+// ====== INIT ======
+if(ALL_Q.length>0)render();
+</script>
+
+</body>
+</html>
