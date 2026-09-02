@@ -51,9 +51,9 @@ body{
 
 /* ---- COMPETITION BANNER ---- */
 .comp-banner{
-  background:linear-gradient(135deg,#7f1d1d,#c0392b);
+  background:linear-gradient(135deg,#166534,#15803d);
   color:#fff;border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;
-  box-shadow:0 4px 16px rgba(192,57,43,.28);
+  box-shadow:0 4px 16px rgba(22,101,52,.28);
   position:relative;overflow:hidden;
 }
 .comp-banner .cb-tag{
@@ -395,37 +395,26 @@ function shuffle(a){var arr=a.slice();for(var i=arr.length-1;i>0;i--){var j=Math
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function normAns(s){if(!s)return'';s=s.trim().toUpperCase().replace(/[、,，\s\|\/]/g,'');return s.split('').sort().join('');}
 function fmtAns(a,t){if(t!=='判断题')return a;var m={'A':'正确','B':'错误','T':'正确','F':'错误'};return m[a]||a;}
-
-// ---- 产品知识挑战赛（8/17 - 8/26，累计答对题数排名）----
-var COMP_START = new Date('2026-08-17T00:00:00');
-var COMP_END   = new Date('2026-08-26T23:59:59');
-function compState(){
-  var now = new Date();
-  var st = {before:false, active:false, after:false, label:'', days:0, hours:0};
-  if(now < COMP_START){st.before = true; st.label = '即将开赛';}
-  else if(now <= COMP_END){st.active = true; st.label = '🔥 火热进行中';}
-  else {st.after = true; st.label = '竞赛已结束';}
-  var diff = now < COMP_START ? (COMP_START - now) : (COMP_END - now);
-  if(diff > 0){
-    st.days = Math.floor(diff / 86400000);
-    st.hours = Math.floor(diff % 86400000 / 3600000);
-  }
-  return st;
+// 选项乱序辅助：取第 i 题的 原始字母→显示字母 映射；把答案字母串转为用户看到的显示字母
+function optDispMap(i){
+  var q=S.questions&&S.questions[i];
+  if(!q||(q.t!=='单选题'&&q.t!=='多选题'))return null;
+  if(!S.optOrders||!S.optOrders[i])return null;
+  var po=parseOpts(q.q).opts, map={};
+  S.optOrders[i].forEach(function(k,pos){if(po[k])map[po[k].l]='ABCDEFGH'[pos];});
+  return map;
 }
+function dispLetters(s,map){if(!map)return s;return String(s).replace(/[A-H]/g,function(ch){return map[ch]||ch;});}
+
+// ---- 产品知识学习（常态化开放：随时刷题、成绩长期累计、排行榜持续有效）----
+// 正式数据起点：2026-08-17（此前为内部联调测试数据，不计入排行榜）
+var COMP_START = new Date('2026-08-17T00:00:00');
+
 function renderCompBanner(){
-  var cs = compState();
   var html='<div class="comp-banner anim-fade">';
-  html+='<div class="cb-tag">🏆 产品知识挑战赛</div>';
-  html+='<div class="cb-title">'+cs.label+'</div>';
-  if(cs.before){
-    html+='<div class="cb-desc">8月17日 - 8月26日 · 10天竞赛 · 可多次刷题，累计答对题数排名 · TOP5 神秘大奖</div>';
-    html+='<div class="cb-countdown">⏳ 距开赛还有 <b>'+cs.days+' 天 '+cs.hours+' 小时</b></div>';
-  } else if(cs.active){
-    html+='<div class="cb-desc">8月17日 - 8月26日 · 可多次刷题，累计答对题数持续累加 · TOP5 神秘大奖</div>';
-    html+='<div class="cb-countdown">⏳ 距截止还有 <b>'+cs.days+' 天 '+cs.hours+' 小时</b></div>';
-  } else {
-    html+='<div class="cb-desc">感谢参与！最终榜单已出炉，获奖同事请留意通知 🎉</div>';
-  }
+  html+='<div class="cb-tag">📚 产品知识学习</div>';
+  html+='<div class="cb-title">持续开放 · 长期有效</div>';
+  html+='<div class="cb-desc">随时刷题，不限次数 · 成绩计入个人累计学习榜 · 长期坚持，越刷越懂</div>';
   html+='</div>';
   return html;
 }
@@ -495,12 +484,12 @@ function render(){
 // ---- HOME ----
 function renderHome(a){
   var html='';
-  // 竞赛横幅
+  // 学习横幅（常态化开放）
   html+=renderCompBanner();
   // Hero
   html+='<div class="hero-card anim-fade">';
   html+='<div class="hero-title">⚡ 知识技能刷题</div>';
-  html+='<div class="hero-desc">欢迎加入冠隆电力！系统将从题库中随机抽取 <b>50道题</b>（仅单选/多选/判断），<b style="color:#f39c12">每题限时30秒</b>，超时自动跳过。答题结束后自动统计成绩。<br><span style="font-size:11px;opacity:.7">⚠️ 答题速度过快（平均每题&lt;4秒）将被标记异常。请独立完成，确保考核真实有效。</span></div>';
+  html+='<div class="hero-desc">冠隆电力全员学习平台，随时可刷。系统将从题库中随机抽取 <b>50道题</b>（仅单选/多选/判断），<b style="color:#f39c12">每题限时30秒</b>，超时自动跳过。答题结束后自动统计成绩，累计答对进入长期排行榜。<br><span style="font-size:11px;opacity:.7">⚠️ 答题速度过快（平均每题&lt;4秒）将被标记异常。请独立完成，确保学习真实有效。</span></div>';
   html+='<div class="hero-stats">';
   html+='<div class="hero-stat"><div class="hs-num">317</div><div class="hs-label">客观题总量</div></div>';
   html+='<div class="hero-stat"><div class="hs-num">50</div><div class="hs-label">随机抽取</div></div>';
@@ -546,6 +535,7 @@ function startQuiz(){
   });
   S.questions=shuffle(filtered).slice(0,50);
   S.answers=S.questions.map(function(){return{selected:[],text:'',correct:null,timeout:false};});
+  S.optOrders=S.questions.map(function(){return null;}); // 每题选项乱序表（防死记硬背），答题期间固定
   S.idx=0;S.showAnswer=false;S.startTime=new Date();S._reviewMode=false;
   S.page='quiz';
   stopTimer();
@@ -564,6 +554,18 @@ function renderQuiz(a){
   // 判断题始终显示"正确"/"错误"两个选项
   if(q.t==='判断题'){hasOpts=true;parsed.opts=[{l:'A',t:'正确'},{l:'B',t:'错误'}];}
   var hasOpts=hasOpts!==undefined?hasOpts:(q.t==='单选题'||q.t==='多选题');
+
+  // 选项随机乱序（仅单选/多选，判断题保持 正确/错误 固定顺序）：
+  // 打乱的是展示顺序并重新编号 A/B/C/D，内部判定仍用原始字母，正确性不受影响
+  var LETTERS='ABCDEFGH';
+  var dispOpts=parsed.opts, dispMap=null;
+  if((q.t==='单选题'||q.t==='多选题')&&parsed.opts.length>1){
+    if(!S.optOrders[i]){
+      S.optOrders[i]=shuffle(parsed.opts.map(function(_,k){return k;}));
+    }
+    dispMap={};
+    dispOpts=S.optOrders[i].map(function(k,pos){dispMap[parsed.opts[k].l]=LETTERS[pos];return parsed.opts[k];});
+  }
 
   var answered=ans.correct!==null||(ans.text&&ans.text.length>0)||(ans.selected.length>0&&S.showAnswer);
   var diffTag=q.d==='简单'?'tag-d1':q.d==='中等'?'tag-d2':'tag-d3';
@@ -606,7 +608,7 @@ function renderQuiz(a){
   // Options
   if(hasOpts){
     html+='<div class="options-list">';
-    parsed.opts.forEach(function(o){
+    dispOpts.forEach(function(o,pos){
       var cls='opt-item';
       if(answered||S.showAnswer){
         var isCor=normAns(q.a).indexOf(o.l)!==-1;
@@ -618,7 +620,7 @@ function renderQuiz(a){
       }
       var dis=(answered||S.showAnswer)?' style="pointer-events:none"':'';
       html+='<div class="'+cls+'" data-opt="'+o.l+'"'+dis+'>';
-      html+='<span class="opt-label">'+o.l+'</span><span>'+esc(o.t)+'</span></div>';
+      html+='<span class="opt-label">'+(dispMap?LETTERS[pos]:o.l)+'</span><span>'+esc(o.t)+'</span></div>';
     });
     html+='</div>';
     if(q.t==='多选题'&&!answered&&!S.showAnswer){
@@ -637,12 +639,12 @@ function renderQuiz(a){
   // Answer feedback (for auto-scored questions)
   if(ans.timeout){
     html+='<div class="feedback-badge wrong">⏰ 时间到！超时未作答</div>';
-    html+='<div class="answer-box"><div class="ab-label">正确答案</div><div class="ab-content">'+esc(fmtAns(q.a,q.t))+'</div></div>';
+    html+='<div class="answer-box"><div class="ab-label">正确答案</div><div class="ab-content">'+esc(dispLetters(fmtAns(q.a,q.t),dispMap))+'</div></div>';
   }else if(answered&&hasOpts){
     if(ans.correct===true)html+='<div class="feedback-badge correct">✅ 回答正确！</div>';
     else if(ans.correct===false){
       html+='<div class="feedback-badge wrong">❌ 回答错误</div>';
-      html+='<div class="answer-box"><div class="ab-label">正确答案</div><div class="ab-content">'+esc(fmtAns(q.a,q.t))+'</div></div>';
+      html+='<div class="answer-box"><div class="ab-label">正确答案</div><div class="ab-content">'+esc(dispLetters(fmtAns(q.a,q.t),dispMap))+'</div></div>';
     }
   }
 
@@ -778,6 +780,8 @@ function jumpTo(j){
 
 // ---- FINISH & RESULT ----
 function finishQuiz(){
+  // 防重入：已进入提交流程或已提交成功则不再触发
+  if(S._submitted||S.submitting)return;
   stopTimer();
   var endTime=new Date();
   var total=50;
@@ -846,22 +850,15 @@ function renderResult(a){
   html+='<div class="stat-box"><div class="sn" style="color:#6b7280">'+r.minutes+'m</div><div class="sl">⏱ 用时</div></div>';
   html+='</div></div>';
 
-  // ===== 竞赛累计卡片 =====
-  var cs2=compState();
-  html+='<div class="quiz-card anim-fade" style="background:linear-gradient(135deg,#7f1d1d,#c0392b);color:#fff;text-align:center">';
-  html+='<div style="font-size:14px;font-weight:700;margin-bottom:6px">🏆 产品知识挑战赛</div>';
+  // ===== 产品知识学习累计卡片 =====
+  html+='<div class="quiz-card anim-fade" style="background:linear-gradient(135deg,#14532d,#166534);color:#fff;text-align:center">';
+  html+='<div style="font-size:14px;font-weight:700;margin-bottom:6px">📚 产品知识学习 · 累计成绩</div>';
   if(S._ranking){
     html+='<div style="font-size:13px;line-height:1.7">本次答对 <b style="color:#ffd76a;font-size:16px">'+r.correct+'</b> 题 · 累计答对 <b style="color:#ffd76a;font-size:16px">'+S._ranking.myCorrect+'</b> 题'+(S._ranking.myCount>1?'（'+S._ranking.myCount+'次）':'')+'</div>';
   }else{
     html+='<div style="font-size:13px;line-height:1.7">本次答对 <b style="color:#ffd76a;font-size:16px">'+r.correct+'</b> 题 · 累计统计中...</div>';
   }
-  if(cs2.active){
-    html+='<div style="font-size:11px;opacity:.85;margin-top:5px">⏳ 距8月26日截止还剩 <b style="color:#ffd76a">'+cs2.days+' 天 '+cs2.hours+' 小时</b> · 多刷多累计，冲刺TOP5神秘大奖！</div>';
-  }else if(cs2.before){
-    html+='<div style="font-size:11px;opacity:.85;margin-top:5px">竞赛将于8月17日开赛，当前答题仍计入累计成绩 ⚡</div>';
-  }else{
-    html+='<div style="font-size:11px;opacity:.85;margin-top:5px">竞赛已结束，感谢参与！获奖名单请留意通知 🎉</div>';
-  }
+  html+='<div style="font-size:11px;opacity:.85;margin-top:5px">学习榜长期有效 · 持续刷题，成绩不断累加，坚持就是进步 💪</div>';
   html+='</div>';
 
   // ===== Ranking card (reads online quiz data) =====
@@ -872,12 +869,12 @@ function renderResult(a){
   }else if(S._ranking){
     var rk=S._ranking;
     html+='<div class="quiz-card anim-fade"><div class="rank-card">';
-    html+='<div class="rc-title">🏆 产品知识挑战赛 · 排行榜</div>';
+    html+='<div class="rc-title">📚 产品知识学习 · 排行榜</div>';
     if(rk.total>1){
-      html+='<div class="rc-sub">你累计答对 <b>'+rk.myCorrect+'</b> 题（共 '+rk.myCount+' 次）· 超越 <b>'+rk.percentile+'%</b> 参赛者</div>';
+      html+='<div class="rc-sub">你累计答对 <b>'+rk.myCorrect+'</b> 题（共 '+rk.myCount+' 次）· 超越 <b>'+rk.percentile+'%</b> 学习者</div>';
       html+='<div style="font-size:10px;color:#bcd4ec;margin-top:4px">⚡ = 答题用时异常，可能非本人独立作答</div>';
     }else{
-      html+='<div class="rc-loading">🎉 你是第 <b>1</b> 位加入竞赛的同事！<br>继续刷题累计更多答对数，冲刺神秘大奖~</div>';
+      html+='<div class="rc-loading">🎉 你是第 <b>1</b> 位开始学习的同事！<br>继续刷题，累计更多答对数，长期保持领先~</div>';
     }
     html+=renderBoardHTML('📚 勤奋榜 · 累计答对题数', rk.top, rk.rank, rk.total, '题', false);
     html+=renderBoardHTML('🥇 最佳表现榜 · 单次最高正确', rk.topBest, rk.rankBest, rk.totalBest, '题', true);
@@ -906,9 +903,9 @@ function renderResult(a){
         html+='<div class="wrong-item" onclick="reviewOne('+i+')">';
         html+='<div class="wq">'+icon+' '+esc(q.q.substring(0,70))+'...</div>';
         html+='<div class="wa">';
-        if(ans.timeout)html+='<span class="ua">超时未作答</span> | 正确：<span class="ra">'+esc(fmtAns(q.a,q.t))+'</span>';
-        else if(ans.correct===false)html+='你的答案：<span class="ua">'+esc(fmtAns(ans.selected.join(''),q.t))+'</span> | 正确：<span class="ra">'+esc(fmtAns(q.a,q.t))+'</span>';
-        else html+='<span class="ua">未作答</span> | 正确：<span class="ra">'+esc(fmtAns(q.a,q.t))+'</span>';
+        if(ans.timeout)html+='<span class="ua">超时未作答</span> | 正确：<span class="ra">'+esc(dispLetters(fmtAns(q.a,q.t),optDispMap(i)))+'</span>';
+        else if(ans.correct===false)html+='你的答案：<span class="ua">'+esc(dispLetters(fmtAns(ans.selected.join(''),q.t),optDispMap(i)))+'</span> | 正确：<span class="ra">'+esc(dispLetters(fmtAns(q.a,q.t),optDispMap(i)))+'</span>';
+        else html+='<span class="ua">未作答</span> | 正确：<span class="ra">'+esc(dispLetters(fmtAns(q.a,q.t),optDispMap(i)))+'</span>';
         html+='</div></div>';
       }
     }
@@ -970,6 +967,8 @@ function kvGet(){
 }
 
 function submitResult(){
+  // 防重入：同一场答题只允许提交一次（3秒自动提交与手动点击可能同时触发）
+  if(S._submitted||S.submitting)return;
   var r=S._result;
   S.submitting=true;
 
@@ -994,6 +993,9 @@ function submitResult(){
   kvGet()
   .then(function(existing){
     var records=Array.isArray(existing)?existing:[];
+    // 幂等保护：同手机号+同 startTime 的记录已存在则不再追加（防止重复提交落库）
+    var dup=records.some(function(r){return r&&r.phone===data.phone&&r.startTime===data.startTime;});
+    if(dup){S._submitted=true;S.submitting=false;S._submitId=data.id;if(S.page==='result')render();setTimeout(fetchRanking,700);return null;}
     records.push(data);
     return fetch(KV_URL,{
       method:'PUT',headers:{'Content-Type':'application/json'},
@@ -1001,6 +1003,8 @@ function submitResult(){
     });
   })
   .then(function(res){
+    // 幂等命中时 res 为 null，直接视为提交成功
+    if(!res)return '';
     // kvdb 的 PUT 返回 200 但响应体为空，res.json() 会抛错导致误报提交失败
     if(!res.ok)throw new Error('HTTP '+res.status);
     return res.text().catch(function(){return '';});
@@ -1060,7 +1064,7 @@ function retrySubmit(){
   });
 }
 
-// ---- RANKING: 竞赛模式 - 按手机号聚合，累计答对题数排名 ----
+// ---- RANKING: 常态化学习模式 - 按手机号聚合，累计答对题数长期排行 ----
 function fetchRanking(){
   if(!S._submitId && !(S._result)){return;}
   S._rankingLoading=true;S._rankingError=false;
@@ -1069,7 +1073,7 @@ function fetchRanking(){
   kvGet()
     .then(function(records){
       records = Array.isArray(records)?records:[];
-      // 仅保留含有效姓名/答对数的记录，且排除竞赛正式开始前（8/17 00:00 前）的测试数据
+      // 仅保留含有效姓名/答对数的记录，且排除正式开放（2026-08-17）前的联调测试数据
       var COMP_MS = COMP_START.getTime();
       var valid = records.filter(function(r){
         if(!r || !r.name || !(r.correct!==undefined||r._rankInfo)) return false;
